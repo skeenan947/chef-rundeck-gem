@@ -86,6 +86,20 @@ class ChefRundeck < Sinatra::Base
       at_exit { File.delete(cache_file) if File.exist?(cache_file) }
     end
   end
+  
+  def build_cookbooks ()
+        #--
+        # Certain features in Rundeck require the osFamily value to be set to 'unix' to work appropriately. - SRK
+        #++
+        cookbooks = Chef::Knife::CookbookSiteList::get_cookbook_list
+        data = ''
+        cookbooks.each do |c|
+          data << c
+        end
+       end
+
+    return data
+  end
 
   def build_project (project="default", pattern="*:*", username=ChefRundeck.username, hostname="fqdn", custom_attributes=nil)
     response = nil
